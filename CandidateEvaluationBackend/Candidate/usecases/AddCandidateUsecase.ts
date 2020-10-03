@@ -27,6 +27,7 @@ export default class AddCandidateUseCase extends BaseUsecase {
       webAddress,
       coverLetter,
       attachment,
+      fondOfWorking,
     } = this.request.body;
     if (!name) {
       throw new HttpError(400, "name is a required field");
@@ -54,14 +55,22 @@ export default class AddCandidateUseCase extends BaseUsecase {
         webAddress,
         coverLetter,
         attachment,
-        fondOfWorking = false,
+        fondOfWorking,
       } = this.request.body;
-      const ip: any =
+      let ip: any =
         this.request.headers["x-forwarded-for"] ||
         this.request.connection.remoteAddress;
-      console.log(ip.split(":")[3]);
+        
 
-      const location: any = lookup("13.234.72.187");
+      let location: any;
+      if (ip.split(":")[3]) {
+        location = lookup(ip.split(":")[3]);
+        ip = ip.split(":")[3]
+      }
+
+      if(!location){
+        location = lookup("13.234.72.187");
+      }
 
       const candidate = new Candidate(
         name,

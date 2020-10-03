@@ -48,15 +48,35 @@ export default class CandidateRepository {
     }
   }
 
-  async getCandidates() {
-    let candidateWithAttachments = await CandidateModel.findAll({
-      include: [
-        {
-          model: Attachment,
-          required: true,
-        },
-      ],
-    });
+  async getCandidates(rating: any) {
+    let candidateWithAttachments = [];
+    
+    if (!rating || rating == 0) {
+      candidateWithAttachments = await CandidateModel.findAll({
+        include: [
+          {
+            model: Attachment,
+            required: true,
+          },
+        ],
+      });
+    } else {
+      candidateWithAttachments = await CandidateModel.findAll({
+        include: [
+          {
+            model: Attachment,
+            required: true,
+          },
+          {
+            model: RatingModel,
+            // right: true,
+            where: { rating: rating },
+            attributes: ["rating", "created_at"],
+            include: [{ model: Admin, attributes: ["name", "email"] }],
+          },
+        ],
+      });
+    }
     let candidates: Candidate[] = candidateWithAttachments.map((value) => {
       let attachment: any = value.get("attachment");
       let name: any = value.get("name");
@@ -101,8 +121,8 @@ export default class CandidateRepository {
       include: [
         {
           model: CommentModel,
-          right: true,
-          attributes: ["commentText", "created_at"],
+          // right: true,
+          attributes: ["commentText", "created_at", "comment_id"],
           include: [{ model: Admin, attributes: ["name", "email"] }],
         },
         {
@@ -114,8 +134,7 @@ export default class CandidateRepository {
         },
       ],
     });
-    // console.log(candidate?.getDataValue("comments"));
-    // console.log(JSON.stringify(candidate, null, 2));
+
     return JSON.parse(JSON.stringify(candidate, null, 2));
   }
 

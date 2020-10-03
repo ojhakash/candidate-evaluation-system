@@ -17,7 +17,7 @@ router.post("/admin/register", async (request, response) => {
   }
 });
 
-router.post("/admin//signin", async (request, response) => {
+router.post("/admin/signin", async (request, response) => {
   try {
     let usecase = await SigninAdminUsecase.create(
       request,

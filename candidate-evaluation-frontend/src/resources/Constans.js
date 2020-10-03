@@ -1,0 +1,4 @@
+export default {
+  LOGGED_IN_TOKEN: "token",
+  CAPTCHA_CLIENT_SECERT:"6LchR9MZAAAAAGM0GiGFfvHSAUEEGhTRgI9-_fyU"
+};

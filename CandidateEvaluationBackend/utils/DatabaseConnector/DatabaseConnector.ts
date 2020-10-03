@@ -3,7 +3,7 @@ import { Sequelize, DataTypes, NOW } from "sequelize";
 
 export default class DatabaseConnector {
   private _sequelize: Sequelize;
-  
+
   constructor() {
     this._sequelize = new Sequelize(
       "candidate_evaluation_system",
@@ -12,13 +12,13 @@ export default class DatabaseConnector {
       {
         host: "localhost",
         dialect: "postgres",
+        logging: false,
       }
     );
   }
 
-  
-  public static get sequelize() : Sequelize {
-      let databaseConnector = new DatabaseConnector();
-      return databaseConnector._sequelize;
+  public static get sequelize(): Sequelize {
+    let databaseConnector = new DatabaseConnector();
+    return databaseConnector._sequelize;
   }
 }

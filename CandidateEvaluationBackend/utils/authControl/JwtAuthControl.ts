@@ -11,6 +11,7 @@ export default class JwtAuthControl implements AuthControlInterface {
       if(!secret){
         throw new HttpError(500,"Internal Server Error")
       }
+      
       let token = sign({ payload: valueToEncode }, secret);
       return token;
     } catch (error) {

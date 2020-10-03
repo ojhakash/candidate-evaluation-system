@@ -19,7 +19,7 @@ export default class GetCandidateByIdUsecase extends BaseUsecase {
   async execute() {
     try {
       this.validate();
-      // await this.authenticate();
+      await this.authenticate();
       let candidate = await this.candidateRepository.getCandidateById(
         this.request.params.candidateId
       );

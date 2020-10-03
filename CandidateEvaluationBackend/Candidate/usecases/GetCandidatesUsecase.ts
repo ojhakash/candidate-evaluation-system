@@ -20,10 +20,13 @@ export default class GetCandidatesUsecase extends BaseUsecase {
     try {
       this.validate();
       await this.authenticate();
-      const candidates = await this.candidateRepository.getCandidates();
-      const candidatesJSON = candidates.map(candidate=>candidate.toJSON())
-      this.response.send({ data: candidatesJSON });
+      const rating = this.request.query.rating;
+      const candidates = await this.candidateRepository.getCandidates(rating);
+      const candidatesJSON = candidates.map((candidate) => candidate.toJSON());
+      this.response.send({ code: 200, data: candidatesJSON });
     } catch (error) {
+      console.error(error);
+
       this.response.send(error);
     }
   }

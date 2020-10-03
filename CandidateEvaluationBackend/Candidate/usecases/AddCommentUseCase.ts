@@ -34,13 +34,10 @@ export default class AddCommentUsecase extends BaseUsecase {
   async execute() {
     try {
       this.validate();
-      console.log("admin");
 
       let admin = await this.authenticate();
-      console.log(admin);
 
       const { candidateEmail, commentText } = this.request.body;
-      console.log(candidateEmail, commentText);
       const comment = new Comment(candidateEmail, this.userId, commentText);
       await this.candidateRepository.addCommentToCandidateByCandidateId(
         comment

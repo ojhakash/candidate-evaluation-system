@@ -27,8 +27,6 @@ export default class AdminRepository {
     await adminObj?.save();
   }
 
-  siginInAdmin() {}
-
   async getAdminById(email: string) {
     let admin = await AdminModel.findOne({ where: { email } });
     if (admin === null) {
@@ -41,5 +39,13 @@ export default class AdminRepository {
     let user = new Admin(name, userEmail, "", hashedPassword);
     user.adminId = adminId;
     return user;
+  }
+
+  async isUserExists(email: string) {
+    let admin = await AdminModel.findOne({ where: { email } });
+    if (admin === null) {
+      return false
+    }
+    return true
   }
 }

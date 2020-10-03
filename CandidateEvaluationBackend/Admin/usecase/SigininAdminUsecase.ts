@@ -52,11 +52,11 @@ export default class SigninAdminUsecase extends BaseUsecase {
 
       let token = this.authControl.sign({ email: admin.email }, tokenSecret);
       this.response.send({
+        code:200,
         data: { email: admin.email, name: admin.userName, token },
       });
 
     } catch (error) {
-      console.log(error);
       this.response.send({ code: error.code, message: error.message });
     }
   }

@@ -24,7 +24,6 @@ let appListenCallBack =async () => {
     await Comment.sync();
     await Rating.sync();
     await Attachment.sync();
-
     console.log("Server started on port " + port);
   } catch (error) {
     console.log("Server started on port " + port + " with error " + error);
@@ -66,5 +65,3 @@ export const createServer =  () => {
 
   app.listen(port, appListenCallBack);
 };
-
-createServer()

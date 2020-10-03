@@ -1,0 +1,26 @@
+const Strings = {
+  app_name: "Candidate Evaluation",
+  error_invalid_email: "Please enter a valid email address.",
+  error_empty_email: "Please enter your email address.",
+  error_empty_userName: "Please enter your user name.",
+  error_empty_password: "Please enter your password.",
+  error_short_password: "Password need to contain atleast 6 characters.",
+  error_empty_web_address: "Please enter a web address.",
+  error_empty_cover_letter: "Plese enter a cover letter.",
+  error_empty_attachment: "Plese upload an attachment.",
+  error_captcha_validate: "Please Fill the captcha given.",
+  error_something_went_wrong: "Something went wrong",
+  error_empty_confirm_password: "Please enter confirm password",
+  error_passwords_are_notmatch: " Password & Confirm password do not match",
+  error_empty_category: "Please enter the product category",
+  error_empty_product_title: "Please enter the product title",
+  error_empty_product_id: "Please enter the product Id",
+  error_empty_unit_product: "Please enter the product unit",
+  error_empty_unit_id: "Please enter the unit Id",
+  error_pdf_file_supported: "Please upload a pdf file",
+  error_empty_comment: "Please enter a comment",
+  error_empty_rating: "Please enter a valid rating",
+  success_add_candidate: "Thanks for your feedback",
+};
+
+export default Strings;

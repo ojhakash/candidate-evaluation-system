@@ -43,7 +43,6 @@ export default class RegisterAdminUsecase extends BaseUsecase {
   async execute() {
     try {
       this.validate();
-      console.log("token");
       let { userName, email, password } = this.request.body;
       let admin = new Admin(userName, email, password);
       // await this.adminRepository.registerAdmin(admin);
@@ -52,10 +51,14 @@ export default class RegisterAdminUsecase extends BaseUsecase {
         : "";
 
       let token = this.authControl.sign({ email: admin.email }, tokenSecret);
-      let frontendCallbackUrl = process.env.frontendCallbackUrl;
-
-      let emailBody = `Please verify your mail.Click this link <a href='${frontendCallbackUrl}${token}'>${frontendCallbackUrl}${token}</a>`;
+      let frontendCallbackUrl = process.env.frontendCallbackUrl+token;
+      let userExists = await this.adminRepository.isUserExists(admin.email)
+      if(userExists){
+        throw new HttpError(400,"User already exists with this email")
+      }
+      let emailBody = `Please verify your mail.Click this link <a href='${frontendCallbackUrl}'>${frontendCallbackUrl}</a>`;
       await this.emailService.sendMail("Verified Email",admin.email,"email verification",emailBody,'','')
+      await this.adminRepository.registerAdmin(admin)
       this.response.send({ code: 200, message: "success" });
     } catch (error) {
       throw error;

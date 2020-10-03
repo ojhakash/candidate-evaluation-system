@@ -40,7 +40,6 @@ export default class UserCallbackVerifyUsecase extends BaseUsecase {
         this.request.params.callbackToken,
         tokenSecret
       );
-      console.log("email : "+payload['email']);
       
       let admin = await this.adminRepository.getAdminById(payload['email']);
       await this.adminRepository.verifyAdmin(admin);

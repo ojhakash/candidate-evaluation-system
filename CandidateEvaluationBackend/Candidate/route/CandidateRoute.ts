@@ -27,9 +27,7 @@ router.get("/candidate/all", async (request, response) => {
 
 router.get("/candidate/:candidateId", async (request, response) => {
   try {
-    let usecase = await GetCandidateByIdUsecase.create(request, response);
-    console.log(request.params);
-    
+    let usecase = await GetCandidateByIdUsecase.create(request, response);    
     await usecase.execute();
   } catch (error) {
     response.send(error);
