@@ -7,6 +7,7 @@ export default class Admin {
   private _password: string;
   private _hashedPassword: string;
   private _adminId: string = '';
+  private _verified: boolean = false;
   private bcryptHashControl: HashControlInterface = new BcryptHashControl();
   constructor(
     userName: string,
@@ -19,6 +20,17 @@ export default class Admin {
     this._password = this.bcryptHashControl.hash(password);
     this._hashedPassword = hashedPassword;
   }
+
+  
+  public get verified() : boolean {
+    return this._verified;
+  }
+  
+  
+  public set verified(v : boolean) {
+    this._verified = v;
+  }
+  
 
   public get userName(): string {
     return this._userName;

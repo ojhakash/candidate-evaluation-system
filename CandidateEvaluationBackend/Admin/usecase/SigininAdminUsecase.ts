@@ -8,7 +8,6 @@ import { HashControlInterface } from "../../utils/hashControl/HashControlInterfa
 import AdminRepository from "../repository/AdminRepository";
 import JwtAuthControl from "../../utils/authControl/JwtAuthControl";
 
-
 export default class SigninAdminUsecase extends BaseUsecase {
   private bcryptHashControl: HashControlInterface = new BcryptHashControl();
   private adminRepository: AdminRepository;
@@ -42,6 +41,9 @@ export default class SigninAdminUsecase extends BaseUsecase {
       let { email, password } = this.request.body;
       let admin = await this.adminRepository.getAdminById(email);
       admin.password = password;
+      if (!admin.verified) {
+        throw new HttpError(403, "Please verify your email.");
+      }
       if (!admin.verifyPassword()) {
         throw new HttpError(403, "password incorrect");
       }
@@ -52,10 +54,9 @@ export default class SigninAdminUsecase extends BaseUsecase {
 
       let token = this.authControl.sign({ email: admin.email }, tokenSecret);
       this.response.send({
-        code:200,
+        code: 200,
         data: { email: admin.email, name: admin.userName, token },
       });
-
     } catch (error) {
       this.response.send({ code: error.code, message: error.message });
     }

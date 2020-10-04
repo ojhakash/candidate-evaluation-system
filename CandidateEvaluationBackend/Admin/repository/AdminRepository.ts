@@ -23,7 +23,7 @@ export default class AdminRepository {
         email: admin.email,
       },
     });
-    adminObj?.set('verified',true)
+    adminObj?.set("verified", true);
     await adminObj?.save();
   }
 
@@ -32,20 +32,22 @@ export default class AdminRepository {
     if (admin === null) {
       throw new HttpError(404, "user not found for this email");
     }
+
     let userEmail: any = admin?.get("email");
     let hashedPassword: any = admin?.get("password");
     let name: any = admin?.get("name");
     let adminId: any = admin?.get("admin_id");
     let user = new Admin(name, userEmail, "", hashedPassword);
     user.adminId = adminId;
+    user.verified = admin.get("verified") ? true : false;
     return user;
   }
 
   async isUserExists(email: string) {
     let admin = await AdminModel.findOne({ where: { email } });
     if (admin === null) {
-      return false
+      return false;
     }
-    return true
+    return true;
   }
 }
